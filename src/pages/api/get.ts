@@ -31,7 +31,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const message:string =  ` Repo Name ${name} and created with ${languages} repo. Size - ${size} .  $ ${forks_count} forks. It is ${allow_forking} that it can be forked. It has ${forks} forks and the default branch is ${default_branch}. The description ${description} . ${extra} create a good readme for this repo with instructions on how to contribute and install. `;
   
-  const response = await openAi.createChatCompletion({
+  const response = await openAi.chat.completions.create({
     model:"gpt-3.5-turbo",
     messages:[
         {"role": "system", "content": `${sample.system}`},  
@@ -40,5 +40,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         {"role": "user", "content": `${message}`}
     ]
 })
-res.status(200).json(response.data.choices[0].message?.content);
+res.status(200).json(response.choices[0].message?.content);
 };
